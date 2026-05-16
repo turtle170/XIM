@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.9.0.schema.json
+
+PackageIdentifier: turtle170.XIM
+PackageVersion: 0.1.0
+PackageName: XIM
+PackageUrl: https://github.com/turtle170/XIM
+Publisher: turtle170
+License: MIT
+ShortDescription: Accelerated Integer Math (XIM) JIT Compiler Backend
+Tags:
+  - machine-learning
+  - quantization
+  - jit
+  - rust
+ManifestType: defaultLocale
+ManifestVersion: 1.9.0

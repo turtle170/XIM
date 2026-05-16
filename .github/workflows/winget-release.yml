@@ -1,0 +1,19 @@
+name: WinGet Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  winget:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Submit to WinGet
+        uses: vedantmgoyal9/winget-releaser@v2
+        with:
+          identifier: turtle170.XIM
+          installers-regex: '\.exe$'
+          token: ${{ secrets.WINGET_TOKEN }}

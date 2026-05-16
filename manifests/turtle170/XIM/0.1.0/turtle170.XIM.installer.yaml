@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.9.0.schema.json
+
+PackageIdentifier: turtle170.XIM
+PackageVersion: 0.1.0
+InstallerLocale: en-US
+InstallerType: portable
+Commands:
+  - xim
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://github.com/turtle170/XIM/releases/download/v0.1.0/xim.exe
+    InstallerSha256: 0000000000000000000000000000000000000000000000000000000000000000 # Placeholder
+ManifestType: installer
+ManifestVersion: 1.9.0
