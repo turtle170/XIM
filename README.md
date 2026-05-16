@@ -34,10 +34,13 @@ XIM treats deep learning graphs as a sequence of integer opcodes. The compilatio
 
 ## Installation
 
-### Prerequisites
-- Rust Nightly (for `portable_simd`)
-- Python 3.10+
-- PyTorch 2.0+ / JAX
+### WinGet (Recommended for Windows)
+XIM is available on WinGet. This will automatically setup the required Rust toolchain and perform a native compilation for your CPU.
+```powershell
+winget install turtle170.XIM
+# After installation, run xim to perform native bootstrapping
+xim
+```
 
 ### Build from Source
 ```powershell

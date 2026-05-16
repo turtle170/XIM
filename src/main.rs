@@ -54,16 +54,30 @@ fn bootstrap_native() -> anyhow::Result<()> {
     use std::process::Command;
     
     info!("Step 1: Checking for Rustup...");
+    // Try to find rustup, if not found, we assume the user just installed it via WinGet
+    // and might need a path refresh, or we can try common paths.
     let status = Command::new("rustup").arg("--version").status();
     if status.is_err() || !status.unwrap().success() {
-        return Err(anyhow::anyhow!("Rustup not found. Please install from https://rustup.rs"));
+        let home = std::env::var("USERPROFILE")?;
+        let rustup_path = format!("{}\\.cargo\\bin\\rustup.exe", home);
+        if std::path::Path::new(&rustup_path).exists() {
+            info!("Found rustup at {}", rustup_path);
+            std::env::set_var("PATH", format!("{};{}", format!("{}\\.cargo\\bin", home), std::env::var("PATH")?));
+        } else {
+            return Err(anyhow::anyhow!("Rustup not found. WinGet should have installed it, but we can't find it. Please restart your shell or install from https://rustup.rs"));
+        }
     }
 
-    info!("Step 2: Installing Nightly and Cranelift...");
-    Command::new("rustup").args(&["toolchain", "install", "nightly"]).status()?;
+    info!("Step 2: Installing Nightly and Cranelift (Unattended)...");
+    Command::new("rustup").args(&["toolchain", "install", "nightly", "--profile", "minimal"]).status()?;
     Command::new("rustup").args(&["component", "add", "rustc-codegen-cranelift-preview", "--toolchain", "nightly"]).status()?;
 
-    info!("Step 3: Compiling XIM for Native Architecture...");
+    info!("Step 3: Cloning XIM Source (if needed)...");
+    if !std::path::Path::new(".git").exists() {
+        Command::new("git").args(&["clone", "https://github.com/turtle170/XIM.git", "."]).status()?;
+    }
+
+    info!("Step 4: Compiling XIM for Native Architecture...");
     let mut child = Command::new("cargo")
         .args(&["+nightly", "build", "--release"])
         .env("RUSTFLAGS", "-C target-cpu=native")
@@ -74,7 +88,14 @@ fn bootstrap_native() -> anyhow::Result<()> {
         return Err(anyhow::anyhow!("Cargo build failed during bootstrap."));
     }
 
+    info!("Step 5: Installing Python extension...");
+    if std::path::Path::new("target/release/xim.dll").exists() {
+        std::fs::copy("target/release/xim.dll", "xim.pyd")?;
+        info!("Successfully installed xim.pyd");
+    }
+
     info!("--- XIM Native Bootstrap Complete ---");
+    info!("Binary is now optimized for your CPU: {}", std::env::var("PROCESSOR_IDENTIFIER").unwrap_or_default());
     Ok(())
 }
 

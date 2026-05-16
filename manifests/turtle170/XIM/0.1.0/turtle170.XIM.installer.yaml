@@ -6,6 +6,10 @@ InstallerLocale: en-US
 InstallerType: portable
 Commands:
   - xim
+Dependencies:
+  PackageDependencies:
+    - PackageIdentifier: Git.Git
+    - PackageIdentifier: Rustlang.Rustup
 Installers:
   - Architecture: x64
     InstallerUrl: https://github.com/turtle170/XIM/releases/download/v0.1.0/xim.exe

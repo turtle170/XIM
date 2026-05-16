@@ -7,10 +7,17 @@ PackageUrl: https://github.com/turtle170/XIM
 Publisher: turtle170
 License: MIT
 ShortDescription: Accelerated Integer Math (XIM) JIT Compiler Backend
+Description: >
+  XIM is a high-performance JIT compiler backend for integer-quantized deep learning.
+  This package installs a native bootstrapper that automatically sets up the Rust nightly
+  toolchain and Cranelift codegen to compile a CPU-optimized version of XIM on your machine.
 Tags:
   - machine-learning
   - quantization
   - jit
   - rust
+  - deep-learning
+ReleaseNotes: >
+  Initial release with Hierarchical JIT Fusion and native bootstrapping support.
 ManifestType: defaultLocale
 ManifestVersion: 1.9.0
