@@ -12,6 +12,15 @@ fn main() -> anyhow::Result<()> {
     info!("--- XIM Phase 6: AIO & Block Scaling ---");
 
     let args: Vec<String> = env::args().collect();
+    let exe_name = env::current_exe()?.file_name().unwrap().to_str().unwrap().to_lowercase();
+    
+    if args.len() == 1 || exe_name.contains("install") {
+        info!("--- XIM Native Installer ---");
+        info!("This will fetch the code, setup Rust Nightly + Cranelift, and compile natively.");
+        bootstrap_native()?;
+        return Ok(());
+    }
+
     if args.len() > 1 {
         match args[1].as_str() {
             "xim-train" => {
