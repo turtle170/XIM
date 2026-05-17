@@ -42,21 +42,10 @@ winget install turtle170.XIM
 xim
 ```
 
-### Build from Source
-```powershell
-# Clone the repository
-git clone https://github.com/turtle170/XIM.git
-cd XIM
-
-# Build the Python extension
-$env:PYO3_USE_ABI3_FORWARD_COMPATIBILITY=1
-cargo build --release
-cp target/release/xim.dll xim.pyd
-```
-
 ## Usage
 
 ### PyTorch Integration
+XIM integrates with `torch.compile` via a custom TorchDynamo backend.
 ```python
 import torch
 import xim_torch
@@ -67,6 +56,33 @@ optimized_model = torch.compile(model, backend="xim")
 
 output = optimized_model(input_tensor)
 ```
+
+### JAX Integration (PJRT Plugin)
+XIM supports JAX via a custom PJRT (Pluggable Just-In-Time) plugin. This allows JAX to offload computations to the XIM JIT engine.
+
+1. **Register the Plugin**:
+```python
+import jax
+import jax_plugin
+
+# Register XIM as a JAX backend
+jax_plugin.register()
+
+# Now JAX will use XIM for supported operations
+@jax.jit
+def my_function(x, y):
+    return x * y + x
+```
+
+2. **Advanced: Pure Callbacks**:
+For operations not yet fully lowered to PJRT, XIM provides a `pure_callback` bridge:
+```python
+from jax_plugin import xim_pure_callback
+
+result = xim_pure_callback(my_jax_array)
+```
+
+### Build from Source
 
 ## License
 Apache 2.0
