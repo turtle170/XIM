@@ -1,8 +1,7 @@
 use crate::ir::XimGraph;
 use crate::executor::Executor;
 use crate::error::Result;
-use crossbeam_channel::{bounded, Receiver, Sender};
-use rayon::prelude::*;
+use crossbeam_channel::bounded;
 use std::thread;
 
 pub struct PipelineExecutor {
@@ -36,7 +35,7 @@ impl PipelineExecutor {
             return Ok(inputs.to_vec());
         }
 
-        let input_dim = self.layer_input_sizes[0];
+        let _input_dim = self.layer_input_sizes[0];
         let output_dim = *self.layer_output_sizes.last().unwrap();
         
         let mut final_outputs = vec![0i16; batch_size * output_dim];

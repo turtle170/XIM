@@ -69,4 +69,4 @@ output = optimized_model(input_tensor)
 ```
 
 ## License
-MIT
+Apache 2.0

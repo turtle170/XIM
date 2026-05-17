@@ -198,7 +198,7 @@ impl SuperFuser {
         for op in ops.drain(..) {
             match op {
                 FusedOp::Load(addr, reg) => {
-                    if let Some(&prev_reg) = addr_to_reg.get(&addr) {
+                    if let Some(&_prev_reg) = addr_to_reg.get(&addr) {
                         // Redirect this register to the previous one
                         // Actually, we need to replace all USES of 'reg' with 'prev_reg'
                         // For simplicity in this XIM IR, we'll just emit a Load and rely on Stage 4 or Cranelift

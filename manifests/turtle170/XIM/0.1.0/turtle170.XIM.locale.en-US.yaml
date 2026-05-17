@@ -5,7 +5,7 @@ PackageVersion: 0.1.0
 PackageName: XIM
 PackageUrl: https://github.com/turtle170/XIM
 Publisher: turtle170
-License: MIT
+License: Apache-2.0
 ShortDescription: Accelerated Integer Math (XIM) JIT Compiler Backend
 Description: >
   XIM is a high-performance JIT compiler backend for integer-quantized deep learning.

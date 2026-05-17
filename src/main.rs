@@ -62,7 +62,9 @@ fn bootstrap_native() -> anyhow::Result<()> {
         let rustup_path = format!("{}\\.cargo\\bin\\rustup.exe", home);
         if std::path::Path::new(&rustup_path).exists() {
             info!("Found rustup at {}", rustup_path);
-            std::env::set_var("PATH", format!("{};{}", format!("{}\\.cargo\\bin", home), std::env::var("PATH")?));
+            unsafe {
+                std::env::set_var("PATH", format!("{};{}", format!("{}\\.cargo\\bin", home), std::env::var("PATH")?));
+            }
         } else {
             return Err(anyhow::anyhow!("Rustup not found. WinGet should have installed it, but we can't find it. Please restart your shell or install from https://rustup.rs"));
         }

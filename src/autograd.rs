@@ -1,5 +1,3 @@
-use crate::quant::DEFAULT_SCALE;
-
 pub struct Xorshift32 {
     state: u32,
 }

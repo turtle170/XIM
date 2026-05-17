@@ -88,7 +88,7 @@ pub unsafe extern "C" fn xim_aot_execute(mem_ptr: *mut i16, inputs_ptr: *const i
         fs::write(src_path, &code)?;
         info!("AOT compiler (Fused) generated source code. Invoking rustc...");
 
-        let mut rustc_args = vec![
+        let rustc_args = vec![
             "--edition", "2021", 
             "-C", "opt-level=3", 
             "-C", "target-cpu=native", 
